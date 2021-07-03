@@ -1,0 +1,107 @@
+---
+title: "STAT253 â€“ Homework1"
+author: "Berk YILDIZ - 150117052"
+date: "23 Mart 2020"
+output:
+  word_document: default
+  html_document: default
+---
+
+```{r chunkLabel}
+# Import data and create vector
+data <- read.csv(file="D:/berky/Documents/R/HW#1/HW1_Data.csv",header=TRUE,sep=";")
+# 1.Variables are quantiative discrete.Data are multivariate.
+# 2.Pie chart, bar chart,dotplots, stem and leaf plots can be used. We can see how are data's location, spread, shape and are there any outliers.
+# 3. a.) Calculate the sample mean.
+tapply(data$SYSBP, data$GENDER, mean)
+tapply(data$DIASBP, data$GENDER, mean)
+# b.) Calculate the sample variance.
+tapply(data$SYSBP, data$GENDER, var)
+tapply(data$DIASBP, data$GENDER, var)
+# c.) Find the sample standard deviation.
+sdsysbp <- tapply(data$SYSBP, data$GENDER, sd)
+sdsysbp
+sddiasbp <- tapply(data$DIASBP, data$GENDER, sd)
+sddiasbp
+# d.) Find the lower and upper quartiles.
+# Lower quartile, is the value that cuts off the first 25% of the data when it is sorted in ascending order.Upper quartile, is the value that cuts off the first 75%.
+tapply(data$SYSBP, data$GENDER, quantile)
+tapply(data$DIASBP, data$GENDER, quantile)
+# e.) What are the maximum and minimum values?
+minmaxsysbp <- tapply(data$SYSBP, data$GENDER, range)
+minmaxsysbp
+minmaxdiasbp <- tapply(data$DIASBP, data$GENDER, range)
+minmaxdiasbp
+# f.) Calculate the range.
+rangesysbp <- lapply(minmaxsysbp,diff)
+rangesysbp
+rangediasbp <- lapply(minmaxdiasbp,diff)
+rangediasbp
+# g.) Compare the range and the standard deviation. The range is approximately how many standard deviations?
+100/13.51935
+70/13.55459
+54/10.352743
+60/9.838468
+# h.) What is the median?
+tapply(data$SYSBP, data$GENDER, median)
+tapply(data$DIASBP, data$GENDER, median)
+# i) Calculate the IQR.
+tapply(data$SYSBP, data$GENDER, IQR, na.rm = FALSE)
+tapply(data$DIASBP, data$GENDER, IQR, na.rm = FALSE)
+# j.) Calculate five-number summaries.
+tapply(data$SYSBP, data$GENDER, fivenum)
+tapply(data$DIASBP, data$GENDER, fivenum)
+# k.) Construct box plot for the data set. Are there any outliers? What does the box plot tell you about the shape of the distribution?
+tapply(data$SYSBP, data$GENDER, boxplot)
+tapply(data$DIASBP, data$GENDER, boxplot)
+# k1. There are 4 outliers. Shape of the distribution is skewed left.
+# k2. There aren't any outliers. Shape of the distribution is symmetric.
+# k3. There are 3 outliers. Shape of the distribution is skewed right.
+# k3. There are 5 outliers. Shape of the distribution is skewed right.
+# l.) Construct and interpret stem-and-leaf plot.
+tapply(data$SYSBP, data$GENDER, stem)
+tapply(data$DIASBP, data$GENDER, stem)
+# l1. There are outliers. Shape of the distribution is skewed left.
+# l2. There aren't any outliers. Shape of the distribution is symmetric.
+# l3. There are outliers. Shape of the distribution is skewed right.
+# l3. There are outliers. Shape of the distribution is skewed right.
+# m.) Construct and interpret histograms. In this solution, you will use different number of subintervals to construct the histograms and then compare the results
+# m1.) use 5 subintervals to construct the histograms and then interpret the graph
+tapply(data$SYSBP, data$GENDER, hist,breaks=22)
+tapply(data$DIASBP, data$GENDER, hist,breaks=10)
+# m2.) use more subintervals (more than 5 subintervals) to construct the graph and then interpret the graph
+tapply(data$SYSBP, data$GENDER, hist)
+tapply(data$DIASBP, data$GENDER, hist,breaks = 5)
+# m3.) compare two results above and discuss which one is better and why.
+#Subintervals with 5 is more detailed than subintervals with 10. Lower subintervals are better.
+# n.) Draw a dotplot of this data set. Are the data mound shaped?
+#Only women systolic blood pressure data set is mound shaped.
+# o.) Can you use Tchebysheff’s Theorem to describe this data set? Why or why not?
+#Yes, Tchebysheff’s Theorem must be true for any data set.
+# p.) Can you use the Empirical Rule to describe this data set? Why or why not?
+#Yes just for the second one.Only women systolic blood pressure data set is mound shaped.
+# q.) Given data sets of two groups, construct and interpret a comparative dotplot to compare the groups
+tapply(data$SYSBP, data$GENDER, dotchart)
+tapply(data$DIASBP, data$GENDER, dotchart)
+# Second one is more widely distrubuted than first one.Third one is more in centered than fourth.
+# r.) Construct a relative frequency histogram for these data. How would you describe the shape of the distribution?
+h<-hist(data$SYSBP, plot=F)
+h$counts <- h$counts / sum(h$counts)
+plot(h, freq=TRUE, ylab="Relative Frequency")
+#Symmetric distrubution
+h<-hist(data$DIASBP, plot=F)
+h$counts <- h$counts / sum(h$counts)
+plot(h, freq=TRUE, ylab="Relative Frequency")
+#Skewed right
+# s.) Find the z-scores for the largest and smallest observations. Would you consider them to be outliers? Why or why not?
+(70-117.07)/13.51935
+(170-117.07)/13.51935
+(80-110.48)/13.55459
+(150-110.48)/13.55459
+(46-74.25)/10.352743
+(100-74.25)/10.352743
+(48-71.75)/9.838468
+(108-71.75)/9.838468
+#First two and the last one is outlier. Because they provide z<-3 or z>3
+```
+
